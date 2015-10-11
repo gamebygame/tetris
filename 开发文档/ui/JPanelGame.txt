@@ -1,0 +1,147 @@
+package ui;
+
+import java.awt.Graphics;
+import javax.swing.JPanel;
+import control.PlayerControl;
+import dto.GameDto;
+
+public class JPanelGame extends JPanel{
+	
+	
+	
+	private Layer[] Layers=null;
+//	private List<Layer> Layers=null;
+//	private Lay lay1=new Lay(40,32,244,198);
+//	private Lay lay2=new Lay(40,262,244,198);
+//	private Lay lay3=new Lay(324,32,244,428);
+	private GameDto dto=null;
+	public JPanelGame(GameDto dto){	
+//		try {
+//			//获得游戏配置
+//			GameConfig cfg=ConfigFactory.getGameConfig();
+//			//获得窗口(层)配置
+//			List<LayerConfig> LayersCfg=cfg.getLayersConfig();
+//			//创建游戏层数组
+//			Layers=new ArrayList<Layer>(LayersCfg.size());
+//			//创建所有层对象
+//			for(LayerConfig LayerCfg:LayersCfg){
+//				//获得类对象
+//				Class<?> cls=Class.forName(LayerCfg.getClassName());
+//				//获得构造函数
+//				Constructor<?> ctr=cls.getConstructor(int.class,int.class,int.class,int.class);
+//				//调用构造函数，创建对象
+//				Layer layer=(Layer)ctr.newInstance(
+//					    LayerCfg.getX(),
+//						LayerCfg.getY(),
+//						LayerCfg.getW(),
+//						LayerCfg.getH()
+//				);
+//		        //设置游戏数据对象
+//		        Layer.setDto(this.dto);
+//				//把创建的Layer对象放入集合
+//				Layers.add(layer);
+//			}
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		//获得数据
+		this.dto=dto;
+		//初始化层
+		initLayer();
+		//初始化组建
+		initComponent();
+	}
+	
+	
+	/**
+	 * 安装玩家控制器
+	 */
+	public void setGameControl(PlayerControl control){
+		this.addKeyListener(control);
+	};
+	
+	
+	/**
+	 * 初始化组建
+	 */
+	private void initComponent(){ }
+	
+	
+	/**
+	 * 初始化层
+	 */
+	private void initLayer(){
+		//硬编码（直接在程序中代入数字）
+		//硬编码并不是好的开发习惯，应尽量将数字或者字符串定义为常量，或者写入配置文件
+		Layers = new Layer[]{
+				//硬编码（直接在程序中代入数字）
+				//硬编码并不是好的开发习惯，应尽量将数字或者字符串定义为常量，或者写入配置文件
+				new LayerBackground(0,0,0,0),
+				new LayerDataBase(40,32,244,198),
+				new LayerDisk(40,262,244,198),
+				new LayerGame(324,32,244,428),
+				new LayerButton(608,32,244,100),
+				new LayerNext(608,164,122,100),
+				new LayerLevel(730,164,122,100),
+				new LayerPoint(608,296,244,100)
+		};
+	};
+
+	
+	@Override
+	public void paintComponent(Graphics g){
+		//图片路径引用
+//		Image img=new ImageIcon("Graphics/window/window.png").getImage();
+		//显示图片（很重要）
+//		g.drawImage(img, 32,32, null);
+		//前四个数据表示Panel中显示的大小，后四个数据表示切割大小
+//		g.drawImage(img, 64, 64, 64+size, 64+size, 0, 0, size, size, null);
+		
+		/*以下调用图片被封装至另一个类Lay以供以后调用方便*/
+//		int size=7;
+//		int x=32;
+//		int y=32;
+//		int w=256;
+//		int h=128;
+//		int imgW=img.getWidth(null);
+//		int imgH=img.getHeight(null);
+		//左上
+//		g.drawImage(img, x, y, x+size, y+size, 0, 0, size, size, null);
+		//中上
+//		g.drawImage(img, x+size, y, x+w-size, y+size, size, 0, imgW-size, size, null );
+		//右上
+//		g.drawImage(img, x+w-size, y, x+w, y+size, imgW-size, 0, imgW, size, null);
+		//左中
+//		g.drawImage(img, x, y+size, x+size, y+h-size, 0, size, size, imgH-size, null);
+		//中
+//		g.drawImage(img, x+size, y+size, x+w-size, y+h-size, size, size, imgW-size, imgH-size, null);
+		//右中
+//		g.drawImage(img, x+w-size, y+size, x+w, y+h-size, imgW-size, size, imgW, imgH-size, null);
+		//左下
+//		g.drawImage(img, x, y+h-size, x+size, y+h, 0, imgH-size, size, imgH, null);
+		//中下
+//		g.drawImage(img, x+size, y+h-size, x+w-size, y+h, size, imgH-size, imgW-size, imgH, null);
+		//右下
+//		g.drawImage(img, x+w-size, y+h-size, x+w, y+h, imgW-size, imgH-size, imgW, imgH, null);
+		
+//		//循环刷新游戏画面
+//		for(int i=0;i<Layers.size();i++){
+//			//刷新层窗口    paint意为调用每个具体对象的paint方法，例如调用LayButton中的paint方法
+//			Layers.get(i).paint(g);
+//		}
+		
+		//调用基类方法
+		super.paintComponent(g);
+		//绘制游戏画面
+		for(int i=0;i<Layers.length;i++){
+			//刷新层窗口    paint意为调用每个具体对象的paint方法，例如调用LayButton中的paint方法
+			Layers[i].paint(g);
+		}
+		//返回焦点
+		this.requestFocus();
+	}
+
+	
+}

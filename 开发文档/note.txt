@@ -1,0 +1,26 @@
+00A：分析
+00B：设计
+
+   MVC：
+      M：model 模型
+      V：view 视图（用户界面）
+      C：control 控制器
+
+00P：编码
+00T：测试
+00SM：维护
+
+cn.com.公司名.项目名.机能分类
+
+包
+ui：表现层
+service：业务逻辑
+dao：数据访问
+entity：实体
+dto：数据载体
+main：启动包
+util：工具类
+config：配置
+
+
+

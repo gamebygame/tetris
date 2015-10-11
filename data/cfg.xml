@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+   <frame title="俄罗斯方块" windowUp="32" width="900" height="550" 
+          padding="12" border="8" loseIdx="8">
+       <button w="90" h="50">
+           <start x="630" y="55" />
+           <userConfig x="742" y="55" />
+       </button>
+       <layer className="ui.LayerBackground" x="0" y="0" w="0" h="0" />
+       <layer className="ui.LayerDataBase" x="40" y="31" w="244" h="220" />
+       <layer className="ui.LayerDisk" x="40" y="262" w="244" h="222" />
+       <layer className="ui.LayerGame" x="323" y="31" w="246" h="453" />
+       <layer className="ui.LayerButton" x="608" y="31" w="244" h="100" />
+       <layer className="ui.LayerNext" x="608" y="164" w="122" h="80" />
+       <layer className="ui.LayerLevel" x="730" y="164" w="122" h="80" />
+       <layer className="ui.LayerPoint" x="608" y="276" w="244" h="105" />
+       <layer className="ui.LayerAbout" x="608" y="413" w="244" h="71" />
+   </frame>
+   
+   
+   <system minX="0" maxX="9" minY="0" maxY="18" levelUp="20">
+       <rect round="true">
+           <point x="4" y="0" /> <point x="3" y="0" /> <point x="5" y="0" /> <point x="6" y="0" />
+       </rect>
+       <rect round="true">
+           <point x="4" y="0" /> <point x="3" y="0" /> <point x="5" y="0" /> <point x="4" y="1" />
+       </rect>
+       <rect round="true">
+           <point x="4" y="0" /> <point x="3" y="0" /> <point x="5" y="0" /> <point x="3" y="1" />
+       </rect>
+       <rect round="true">
+           <point x="4" y="0" /> <point x="5" y="0" /> <point x="3" y="1" /> <point x="4" y="1" />
+       </rect>
+       <rect round="false">
+           <point x="4" y="0" /> <point x="5" y="0" /> <point x="4" y="1" /> <point x="5" y="1" />
+       </rect>
+       <rect round="true">
+           <point x="4" y="0" /> <point x="3" y="0" /> <point x="5" y="0" /> <point x="5" y="1" />
+       </rect>
+       <rect round="true">
+           <point x="4" y="0" /> <point x="3" y="0" /> <point x="4" y="1" /> <point x="5" y="1" />
+       </rect>
+       <plusPoint rm="1" point="10" />
+       <plusPoint rm="2" point="30" />
+       <plusPoint rm="3" point="50" />
+       <plusPoint rm="4" point="80" />
+   </system>
+   
+   
+   <data maxRow="5">
+      <dataA className="dao.DataBase">
+           <param key="driver" value="com.mysql.jdbc.Driver" />
+           <param key="dbUrl" value="jdbc:mysql://localhost:3306/namebygame" />
+           <param key="dbUser" value="Jovi" />
+           <param key="dbPwd" value="mwq1992414" />
+      </dataA>
+      <dataB className="dao.DataDisk">
+           <param key="path" value="data/recode.dat" />
+      </dataB>
+   </data>
+</game>  
+

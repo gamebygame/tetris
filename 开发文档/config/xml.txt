@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+   <frame title="¶íÂÞË¹·½¿é" windowUp="32" width="900" height="550" padding="12" border="7">
+       <layer className="ui.LayerBackground" x="0" y="0" w="0" h="0" />
+       <layer className="ui.LayerDataBase" x="40" y="32" w="244" h="220" />
+       <layer className="ui.LayerDisk" x="40" y="262" w="244" h="221" />
+       <layer className="ui.LayerGame" x="324" y="32" w="244" h="451" />
+       <layer className="ui.LayerButton" x="608" y="32" w="244" h="100" />
+       <layer className="ui.LayerNext" x="608" y="164" w="122" h="80" />
+       <layer className="ui.LayerLevel" x="730" y="164" w="122" h="80" />
+       <layer className="ui.LayerPoint" x="608" y="276" w="244" h="105" />
+       <layer className="ui.LayerAbout" x="608" y="413" w="244" h="70" />
+   </frame>
+   
+   
+   <system>
+   </system>
+   
+   
+   <data>
+      <dataA className="dao.DataBase">
+          <param key="driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+          <param key="dbUrl" value="jdbc:sqlserver://127.0.0.1:1433;database=namebygame" />
+          <param key="dbUser" value="Jovi" />
+          <param key="dbPwd" value="mwq1992414" />
+      </dataA>
+      <dataB className="dao.DataDisk">
+          <param key="path" value="save/recode.dat" />
+      </dataB>
+   </data>
+</game>  
+

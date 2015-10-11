@@ -1,0 +1,193 @@
+package control;
+
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import service.GameService;
+import service.GameTetris;
+import ui.JPanelGame;
+import ui.cfg.FrameConfig;
+import config.DataInterfaceConfig;
+import config.GameConfig;
+import dao.Data;
+
+
+/**
+ * 接受玩家键盘事件
+ * 调用游戏逻辑
+ * 
+ * @author J
+ */
+public class GameControl {
+	
+	
+	
+	/**
+	 * 数据访问接口A
+	 */
+	private Data dataA;
+	/**
+	 * 数据访问接口B
+	 */
+	private Data dataB;
+	
+	/**
+	 * 调用GameService类（游戏逻辑）
+	 */
+	private GameService gameService;
+	/**
+	 * 游戏界面层
+	 */
+	private JPanelGame panelGame;
+	/**
+	 * 游戏控制窗口（就是模拟器的那个类啦）
+	 */
+	private FrameConfig frameConfig;
+	/**
+	 * 通过映射控制游戏具体行为 
+	 * Integer 相当于 keyCode 
+	 */
+	private Map<Integer,Method> actionList;
+	/**
+	 * 声明线程变量（游戏线程）
+	 */
+	private Thread gameThread = null;
+	
+	
+	/**
+	 * 构造方法
+	 */
+	public GameControl(JPanelGame panelGame,GameTetris gameService){
+		this.panelGame=panelGame;
+		this.gameService=gameService;
+		
+		/**
+		 * 从配置类中调用 get 方法获得接口所需用的参数
+		 */
+		// 从接口A获得数据库记录
+		@SuppressWarnings("unused")
+		DataInterfaceConfig cfgDataA = GameConfig.getDataConfig().getDataA();
+		// 获得类对象 （创建 dataA 的时候获得 dataA 的配置）
+		this.dataA = createGameObject(GameConfig.getDataConfig().getDataA());
+		// 设置数据库记录到游戏
+		this.gameService.setDbRecode(dataA.loadData());
+		// 从接口B获得本地磁盘记录（创建 dataB 的时候获得 dataA 的配置）
+		this.dataB = createGameObject(GameConfig.getDataConfig().getDataB());
+		// 设置本地磁盘记录到游戏
+		this.gameService.setDiskRecode(dataB.loadData());
+		// 读取用户控制键设置  
+		setControlConfig();
+		// 初始化用户配置窗口
+		this.frameConfig = new FrameConfig(this);
+	}
+	
+	
+	/**
+	 * 读取用户控制键设置
+	 */
+	private void setControlConfig(){
+		//创建 键盘码 与 方法名 的映射数组
+		this.actionList = new HashMap<Integer, Method>();
+		//读取已经存入的按键信息（包括功能键和方向键）
+		try {
+			@SuppressWarnings("resource")
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("data/control.dat"));
+			@SuppressWarnings("unchecked")
+			HashMap<Integer, String> cfgSet = (HashMap<Integer, String>)ois.readObject();
+			//获得 HashMap 转化的集合
+			Set<Entry<Integer, String>> entryset = cfgSet.entrySet();
+			//迭代获得方法名以获取相应方法
+			//注意在转化的  Set<Entry<Integer, String>> 集合中 String 存放的是方法名，而 HashMap<Integer, String> 中 String 存放的是方法
+			for(Entry<Integer, String> e: entryset){
+				actionList.put(e.getKey(), this.gameService.getClass().getMethod(e.getValue()));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * 创建数据对象
+	 * 
+	 * @param cfg
+	 * @return
+	 */
+	private Data createGameObject(DataInterfaceConfig cfg) {
+		try {
+			// 获得类对象
+			Class<?> cls = Class.forName(cfg.getClassName());
+			// 获得构造器
+			Constructor<?> ctr = cls.getConstructor(HashMap.class);
+			// 创建对象
+			return (Data)ctr.newInstance(cfg.getParam());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	
+	/**
+	 * 根据玩家键入具体控制响应行为
+	 */
+	public void actionByKeyCode(int keyCode) {
+		try {
+			// 下面方法判定玩家键入的按键是否在配置文件里存在，只有存在了才会调用具体响应方法
+			// 如果没有这条判定当用户手滑点到其他按键的话游戏会报错，这种情况最好不要出现为好。。
+			if (this.actionList.containsKey(keyCode)) {
+				// 下面这条通过玩家按键直接调用方法的语句和下面注释掉的语句效果相同  不过更加简单
+				this.actionList.get(keyCode).invoke(this.gameService);
+//				// 获得方法名
+//				String methodName = this.actionList.get(keyCode);
+//				// 获得方法对象
+//				Method actionMethod = this.gameService.getClass().getMethod(methodName);
+//				// 调用方法
+//				actionMethod.invoke(this.gameService);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			}
+		this.panelGame.repaint();
+	}
+
+
+	/**
+	 * 显示玩家控制窗口（显示模拟器）
+	 */
+	public void showUserConfig() {
+		this.frameConfig.setVisible(true);
+	}
+
+
+	/**
+	 * 刷新一下画面（模拟器窗口关闭事件）
+	 */
+	public void setOver() {
+		this.panelGame.repaint();
+		// 设置好模拟器键位后再加载一次（相当于再读取一次用户键位设置）
+		this.setControlConfig();
+	}
+
+
+	/**
+	 * 开始按钮事件
+	 * JPanelGame 调用  GameControl 对象 gameControl 调用 start 方法
+	 */
+	public void start() {
+		// 点击开始启动游戏之后无法继续点击按钮
+		this.panelGame.buttonSwich(false);
+		this.gameService.startMainThread();
+		this.panelGame.repaint();
+//		this.gameThread;
+	}
+	
+	
+	
+}
