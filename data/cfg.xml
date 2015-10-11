@@ -51,8 +51,8 @@
       <dataA className="dao.DataBase">
            <param key="driver" value="com.mysql.jdbc.Driver" />
            <param key="dbUrl" value="jdbc:mysql://localhost:3306/namebygame" />
-           <param key="dbUser" value="Jovi" />
-           <param key="dbPwd" value="mwq1992414" />
+           <param key="dbUser" value="your name" />
+           <param key="dbPwd" value="your password" />
       </dataA>
       <dataB className="dao.DataDisk">
            <param key="path" value="data/recode.dat" />
