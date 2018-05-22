@@ -2,19 +2,19 @@
 
 Simple tetris game finished with XiaoY's help
 
-## Get start
+## Get Started
 
 Notice `*.class` now exists already and because I use eclipse to finish this game, so I recommend you use that to find Main.java to run or load all source code.
 
 For DB aspect I use mysql to connect with jdbc, so you could use this function with your local db, either modify data/cfg.xml param which in __data__ tag.
 
-## Directly playing
+## Directly Playing
 
 Within dir __export__ you could directly exec __Tetris.jar__ or start.bat to play game.
 
 More info please refer user guide in __export/guide.txt__
 
-## Some generic demo display
+## Some Generic Demo Display
 
 1. main user interface
   ![main ui](https://raw.githubusercontent.com/L-Jovi/tetris/master/demo/1Ö÷½çÃæ.png)
