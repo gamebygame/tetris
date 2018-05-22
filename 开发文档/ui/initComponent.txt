@@ -1,8 +1,0 @@
-	private void initComponent(){
-		//在Panel上面装GameControl调用游戏具体逻辑
-      	GameControl ctrl=new GameControl(this);
-		//往Panel的组建方法上面装监听可以接收键盘调用  this表示Panel创建的对象
-		this.addKeyListener(new PlayerControl
-				(new GameControl
-						(this,new GameService(null))));
-		}

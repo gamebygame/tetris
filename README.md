@@ -17,21 +17,17 @@ More info please refer user guide in __export/guide.txt__
 ## Some generic demo display
 
 1. main user interface
-
   ![main ui](https://raw.githubusercontent.com/L-Jovi/tetris/master/demo/1主界面.png)
 
 2. coustom define key bind
-
   ![key bind](https://raw.githubusercontent.com/L-Jovi/tetris/master/demo/2自定义键位.png)
 
 3. replace skin
-
   ![replace skin1](https://raw.githubusercontent.com/L-Jovi/tetris/master/demo/3-1换肤实现.png)
   ![replace skin2](https://raw.githubusercontent.com/L-Jovi/tetris/master/demo/3-1换肤实现.png)
   ![replace skin3](https://raw.githubusercontent.com/L-Jovi/tetris/master/demo/3-1换肤实现.png)
 
 4. change bg img when you level up
-
   ![change bg](https://raw.githubusercontent.com/L-Jovi/tetris/master/demo/4升级变换背景.png)
 
 5. record your score when game over
