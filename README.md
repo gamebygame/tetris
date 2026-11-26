@@ -36,3 +36,7 @@ More info please refer user guide in __export/guide.txt__
 ## Thanks
 
 It's my first time to use git to commit my game, If I do something wrong, thanks for you to point error to me. Thanks!
+
+## License
+
+[MIT](LICENSE) © 2026 Jovi.
